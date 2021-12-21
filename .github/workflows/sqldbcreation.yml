@@ -3,7 +3,7 @@ name: Sql database automation
 on:
   push:
     branches:
-      - master
+      - main
 
     paths:
     - 'readmesqlservicecreate.md' 
