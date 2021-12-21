@@ -11,7 +11,7 @@ on:
 env:
   AZURE_RESOURCE_GROUP: ImpetusRG               # set this to your Azure Resource group's name  
   AZURE_LOCATION: eastus                         # set this to your azure resource group location   
-  AZURE_SQL_SERVERNAME: HackathonSqlServer         # set SQL Server  
+  AZURE_SQL_SERVERNAME: SqldbImpetus         # set SQL Server  
   AZURE_SQL_DATABASE: HackathonSqlDB    # set sqladmin user
   AZURE_SQLFIREWALL_IP: 0.0.0.0    # set this to all Azure IPs
   
