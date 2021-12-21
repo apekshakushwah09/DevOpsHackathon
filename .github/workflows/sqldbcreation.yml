@@ -15,7 +15,6 @@ env:
   AZURE_SQL_DATABASE: HTSqlDB    # set sqladmin user
   AZURE_SQLFIREWALL_IP: 0.0.0.0    # set this to all Azure IPs
   
-
 jobs:
   azuresetup:
     runs-on: ubuntu-latest
