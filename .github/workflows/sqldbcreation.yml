@@ -21,7 +21,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: azure/login@v1
-      env:
+      with:
         creds: ${{ secrets.DEPLOYGITHUB }}
 
 # Provision a Azure sQL Database on Azure
