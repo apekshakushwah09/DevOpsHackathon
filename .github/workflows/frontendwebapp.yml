@@ -1,13 +1,6 @@
 name: Azure Frontend Webapp Creation automation
 
-on:
-  push:
-    branches:
-      - main
-
-    paths:
-    - 'frontendwebappcreation.md'
-    
+on:    
   workflow_dispatch:
 
 env:
