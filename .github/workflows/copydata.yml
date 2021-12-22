@@ -1,0 +1,34 @@
+name: Azure Service Creation automation
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch: 
+
+env:
+  AZURE_RESOURCE_GROUP: ImpetusRG               # set this to your Azure Resource group's name  
+  AZURE_LOCATION: eastus                         # set this to your azure resource group location   
+  AZURE_STORAGE_NAME: storageaccimpetus
+  
+jobs:
+  azuresetup:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.DEPLOYGITHUB }}
+
+# Copy Documents to Azure Storage Container
+    - name: Azure Service creation
+      uses: azure/CLI@v1
+      with:
+        azcliversion: latest
+        inlineScript: |
+          azcopy copy "./policy-documents/" "https://storageaccimpetus.blob.core.windows.net/contosocontainer?sp=r&st=2021-12-22T09:58:02Z&se=2021-12-22T17:58:02Z&spr=https&sv=2020-08-04&sr=c&sig=Zu%2Bnx2iunbJ1DhdNDfCxXXlIh193N6WaXyx7DQSBH5s%3D"
+# Azure logout 
+    - name: logout
+      run: |
+        az logout 
