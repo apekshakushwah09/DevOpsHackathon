@@ -4,6 +4,7 @@ env:
   AZURE_WEBAPP_NAME: frontendwebappimpetus    # set this to the name of your Azure Web App
   AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '3.1.*'                 # set this to the .NET Core version to use
+  AZURE_API_URL: 'https://apiappimpetus.azurewebsites.net'
 
 on:
   push:
@@ -24,6 +25,13 @@ jobs:
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.DEPLOYGITHUB }}
+          
+      - name: Action to Integrate Frontend Website with API Website
+        uses: azure/CLI@v1
+        with:
+         azcliversion: latest
+         inlineScript: |
+           az webapp config appsettings set -g ${{ env.AZURE_RESOURCE_GROUP }} -n ${{ env.AZURE_WEBAPP_NAME}} --settings ApiUrl=${{ env.AZURE_API_URL }}
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
