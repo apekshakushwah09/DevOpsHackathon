@@ -72,7 +72,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/ImpetusApp
+          path: ${{env.AZURE_WEBAPP_PACKAGE_PATH}}/ImpetusApp
 
   deploy:
     runs-on: ubuntu-latest
