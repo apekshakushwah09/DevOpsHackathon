@@ -1,4 +1,4 @@
-name: Azure Service Creation automation
+name: Azure Frontend Webapp Creation automation
 
 on:
   push:
