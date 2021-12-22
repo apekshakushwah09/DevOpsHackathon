@@ -1,9 +1,9 @@
-name: Azure Service Creation automation
+name: copy data to container automation
 
 on:
   push:
     branches:
-      - main
+      - master
 
   workflow_dispatch: 
 
