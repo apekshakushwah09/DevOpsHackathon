@@ -1,0 +1,41 @@
+name: Azure Service Creation automation
+
+on:
+  push:
+    branches:
+      - main
+
+    paths:
+    - 'frontendwebappcreation.md'
+    
+  workflow_dispatch:
+
+env:
+  AZURE_RESOURCE_GROUP: ImpetusRG               # set this to your Azure Resource group's name  
+  AZURE_LOCATION: eastus                         # set this to your azure resource group location   
+  AZURE_APP_PLAN: webappimpetusplan
+  AZURE_FRONTEND_WEBAPP_NAME: frontendwebappimpetus
+  
+jobs:
+  azuresetup:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.DEPLOYGITHUB }}
+
+# Provision a Azure service on Azure
+    - name: Azure frontend webapp creation 
+      uses: azure/CLI@v1
+      with:
+        azcliversion: latest
+        inlineScript: |
+           az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_FRONTEND_WEBAPP_NAME }}  --runtime "DOTNETCORE|3.1"
+
+    # Azure logout 
+    - name: logout
+      run: |
+        az logout 
+ 
+   
