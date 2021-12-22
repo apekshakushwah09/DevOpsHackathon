@@ -1,12 +1,7 @@
 name: Azure Service Creation automation
 
 on:
-  push:
-    branches:
-      - main
-
-    paths:
-    - 'servicecreation.md' 
+  workflow_dispatch: 
 
 env:
   AZURE_RESOURCE_GROUP: ImpetusRG               # set this to your Azure Resource group's name  
