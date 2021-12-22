@@ -1,12 +1,7 @@
 name: Sql database update
 
 on:
-  push:
-    branches:
-      - master
-
-    paths:
-    - 'readmeforsqlupdate.md' 
+  workflow_dispatch:
 env:
   AZURE_SQL_SERVERNAME: sqldbimpetus.database.windows.net
 
