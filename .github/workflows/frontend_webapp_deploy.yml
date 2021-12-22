@@ -1,0 +1,56 @@
+name: Build and deploy Frontend Webapp to an Azure Web App
+
+env:
+  AZURE_WEBAPP_NAME: frontendwebappimpetus    # set this to the name of your Azure Web App
+  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+  DOTNET_VERSION: '3.1.*'                 # set this to the .NET Core version to use
+
+on:
+  push:
+    branches:
+      - master
+    
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/Contoso.Web
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.DEPLOYGITHUB }}
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      
+      - name: Set up dependency caching for faster builds
+        uses: actions/cache@v2
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Install dependencies
+        run: dotnet restore
+        
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
+
+      - name: dotnet publish
+        run: dotnet publish -c Release -o '${{env.AZURE_WEBAPP_PACKAGE_PATH}}/ImpetusFrontendApp'
+        
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_FRONTENDAPP_PUBLISH_PROFILE }}
+          package: '/home/runner/work/DevOpsHackathon/DevOpsHackathon/src/Contoso.Web/ImpetusFrontendApp/'
