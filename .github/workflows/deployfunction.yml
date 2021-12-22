@@ -28,7 +28,7 @@ jobs:
       run: |
         pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
         dotnet build --configuration Release 
-        dotnet publish dotnet publish -c Release -o '${{env.AZURE_FUNCTIONAPP_PACKAGE_PATH}}/ImpetusFunction'
+        dotnet publish -c Release -o '${{env.AZURE_FUNCTIONAPP_PACKAGE_PATH}}/ImpetusFunction'
         popd
     - name: 'Run Azure Functions Action'
       uses: Azure/functions-action@v1
